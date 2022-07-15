@@ -7,15 +7,10 @@ import styles from "../Styles/Styles";
 import StatusLoading from "../Components/StatusLoading";
 
 import { Feather } from "@expo/vector-icons";
-import {
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Image, View, Text, TouchableOpacity, TextInput } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import { URL_APP_API } from "@env";
 function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,19 +23,13 @@ function Login({ navigation }) {
   async function handleSubmit() {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.URL_APP_API}login`,
-        { email: email, password: password },
-        {
-          headers: {
-            email: email, // lya@gmail.com
-            password: password, // azerty
-          },
-        }
-      );
+      const response = await axios.post(`${URL_APP_API}login`, {
+        email: email,
+        password: password,
+      });
       setValid(true);
       setIsLoading(false);
-      console.log("error response", response);
+      console.log("RESPONSE :", response.data);
     } catch (error) {
       console.log(error.response);
       setValid(false);
@@ -55,11 +44,12 @@ function Login({ navigation }) {
       {isLoading ? (
         <StatusLoading />
       ) : (
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
+        <KeyboardAwareScrollView
+          style={styles.body}
+          keyboardVerticalOffset={100}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={[styles.container, styles.body]}>
+          <View style={[styles.container]}>
             <View style={[styles.box]}>
               <Image
                 style={styles.Logo}
@@ -125,7 +115,7 @@ function Login({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
       )}
     </View>
   );
