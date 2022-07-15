@@ -17,6 +17,8 @@ import {
   TextInput,
 } from "react-native";
 
+import { URL_APP_API } from "@env";
+
 function SingUp({ navigation }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -39,7 +41,7 @@ function SingUp({ navigation }) {
       setIsLoading(true);
       try {
         const response = await axios.post(
-          `${process.env.URL_APP_API}register`,
+          `${URL_APP_API}register`,
           {
             email: email,
             username: username,
@@ -81,7 +83,7 @@ function SingUp({ navigation }) {
       {isLoading ? (
         <StatusLoading />
       ) : (
-        <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
+        <ScrollView style={[{ flex: 1 }, styles.body]} scrollEnabled={true}>
           <View style={[styles.container]}>
             <View style={[styles.box]}>
               <Image
