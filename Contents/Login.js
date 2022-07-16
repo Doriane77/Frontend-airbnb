@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Toast from "react-native-toast-message";
 
 const axios = require("axios");
 
@@ -11,7 +12,7 @@ import { Image, View, Text, TouchableOpacity, TextInput } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { URL_APP_API } from "@env";
-function Login({ navigation }) {
+function Login({ navigation, setAuthToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,9 +30,24 @@ function Login({ navigation }) {
       });
       setValid(true);
       setIsLoading(false);
-      console.log("RESPONSE :", response.data);
+      const data = response.data[0];
+
+      if (response.data.message !== undefined) {
+        Toast.show({
+          type: "error",
+          text1: `${response.data.message} ! `,
+        });
+      } else {
+        const token = data.token;
+        setAuthToken(token);
+        Toast.show({
+          type: "success",
+          text1: ` ${data.name} `,
+          text2: "Bienvenue sur Airbnb",
+        });
+      }
     } catch (error) {
-      console.log(error.response);
+      console.log("ERROR :", error.response.data);
       setValid(false);
       setIsLoading(false);
     }
