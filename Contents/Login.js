@@ -12,14 +12,24 @@ import { Image, View, Text, TouchableOpacity, TextInput } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { URL_APP_API } from "@env";
-function Login({ navigation, setAuthToken }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useNavigation } from "@react-navigation/native";
+
+import handleChange from "../Function/handleChange";
+
+function Login({ setAuthToken }) {
+  const navigation = useNavigation();
+
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+  });
 
   const [seePassword, setSeePassword] = useState(true);
   const [isLoading, setIsLoading] = useState(null);
 
   const [valid, setValid] = useState(true);
+
+  const { email, password } = formValue;
 
   async function handleSubmit() {
     setIsLoading(true);
@@ -77,10 +87,11 @@ function Login({ navigation, setAuthToken }) {
               <TextInput
                 style={[styles.input, styles.borderInput]}
                 placeholder="Email"
+                name="email"
+                onChangeText={(text) =>
+                  handleChange("email", text, formValue, setFormValue)
+                }
                 value={email}
-                onChangeText={(text) => {
-                  setEmail(text);
-                }}
                 require
               />
 
@@ -89,10 +100,11 @@ function Login({ navigation, setAuthToken }) {
                   style={[styles.input, styles.inputPassword]}
                   placeholder="Password"
                   secureTextEntry={seePassword}
+                  name="password"
+                  onChangeText={(text) =>
+                    handleChange("password", text, formValue, setFormValue)
+                  }
                   value={password}
-                  onChangeText={(text) => {
-                    setPassword(text);
-                  }}
                   require
                 />
                 <View>
