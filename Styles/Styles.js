@@ -10,13 +10,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
   },
-
+  align: {
+    flexDirection: "row",
+  },
   box: {
     alignItems: "center",
     marginTop: 30,
     // backgroundColor: "red",
   },
-
+  colorText: {
+    color: "black",
+  },
   Logo: {
     width: 120,
     height: 120,
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 25,
     marginBottom: 30,
-    color: "gray",
+    // color: "gray",
     fontSize: 30,
   },
 
@@ -64,13 +68,14 @@ const styles = StyleSheet.create({
     // backgroundColor: "pink",
     marginBottom: 20,
     marginLeft: 3,
-    flexDirection: "row",
 
     alignItems: "center",
   },
   lastInputPassWord: {
     marginBottom: 0,
   },
+  inputPicture: { flex: 1, fontSize: 18, color: "gray" },
+
   none: {
     display: "none",
   },
@@ -98,13 +103,13 @@ const styles = StyleSheet.create({
   },
   textButtonSignin: {
     fontSize: 20,
-    color: "gray",
+    // color: "gray",
   },
   buttonRegister: {
     marginVertical: 20,
   },
   textButtonRegister: {
-    color: "gray",
+    // color: "gray",
   },
 });
 export default styles;
