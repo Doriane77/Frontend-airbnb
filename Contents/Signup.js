@@ -5,7 +5,8 @@ const axios = require("axios");
 import StatusLoading from "../Components/StatusLoading";
 
 import styles from "../Styles/Styles";
-
+import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 import {
@@ -18,13 +19,30 @@ import {
 } from "react-native";
 
 import { URL_APP_API } from "@env";
+import handleChange from "../Function/handleChange";
+import * as ImagePicker from "expo-image-picker";
 
 function SingUp({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [description, setDesccription] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formValue, setFormValue] = useState({
+    email: "",
+    username: "",
+    description: "",
+    password: "",
+    confirmPassword: "",
+    image: null,
+    uploading: false,
+  });
+
+  const {
+    email,
+    username,
+    description,
+    password,
+    confirmPassword,
+    image,
+    uploading,
+  } = formValue;
+
   const [valid, setValid] = useState(true);
 
   const [seePassword, setSeePassword] = useState(true);
@@ -36,10 +54,25 @@ function SingUp({ navigation }) {
     if (
       password === confirmPassword &&
       password !== "" &&
-      confirmPassword !== ""
+      confirmPassword !== "" &&
+      image !== null
     ) {
       setIsLoading(true);
       try {
+        const cameraRollPerm =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        console.log(
+          "email :",
+          email,
+          "username :",
+          username,
+          "description :",
+          description,
+          "password :",
+          password,
+          "confirm pasword :",
+          confirmPassword
+        );
         const response = await axios.post(
           `${URL_APP_API}register`,
           {
@@ -85,12 +118,12 @@ function SingUp({ navigation }) {
       ) : (
         <ScrollView style={[{ flex: 1 }, styles.body]} scrollEnabled={true}>
           <View style={[styles.container]}>
-            <View style={[styles.box]}>
+            <View style={[styles.seePassword, styles.box]}>
               <Image
                 style={styles.Logo}
                 source={require("../assets/images/LOGO.jpg")}
               />
-              <Text style={[styles.text]}>Sign up</Text>
+              <Text style={[styles.text, styles.colorText]}>Sign up</Text>
             </View>
             <View>
               <TextInput
@@ -98,7 +131,7 @@ function SingUp({ navigation }) {
                 placeholder="Email"
                 value={email}
                 onChangeText={(text) => {
-                  setEmail(text);
+                  handleChange("email", text, formValue, setFormValue);
                 }}
                 require
               />
@@ -107,7 +140,7 @@ function SingUp({ navigation }) {
                 placeholder="Username"
                 value={username}
                 onChangeText={(text) => {
-                  setUsername(text);
+                  handleChange("username", text, formValue, setFormValue);
                 }}
                 require
               />
@@ -117,18 +150,20 @@ function SingUp({ navigation }) {
                 multiline={true}
                 value={description}
                 onChangeText={(text) => {
-                  setDesccription(text);
+                  handleChange("description", text, formValue, setFormValue);
                 }}
                 require
               />
-              <View style={[styles.seePassword, styles.borderInput]}>
+              <View
+                style={[styles.align, styles.seePassword, styles.borderInput]}
+              >
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
                   placeholder="Password"
                   secureTextEntry={seePassword}
                   value={password}
                   onChangeText={(text) => {
-                    setPassword(text);
+                    handleChange("password", text, formValue, setFormValue);
                   }}
                   require
                 />
@@ -145,11 +180,7 @@ function SingUp({ navigation }) {
                 </View>
               </View>
               <View
-                style={[
-                  styles.seePassword,
-                  styles.borderInput,
-                  styles.lastInputPassWord,
-                ]}
+                style={[styles.align, styles.seePassword, styles.borderInput]}
               >
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
@@ -157,7 +188,12 @@ function SingUp({ navigation }) {
                   secureTextEntry={seeConfirmPassword}
                   value={confirmPassword}
                   onChangeText={(text) => {
-                    setConfirmPassword(text);
+                    handleChange(
+                      "confirmPassword",
+                      text,
+                      formValue,
+                      setFormValue
+                    );
                   }}
                   require
                 />
@@ -172,6 +208,29 @@ function SingUp({ navigation }) {
                     </TouchableOpacity>
                   )}
                 </View>
+              </View>
+              <View
+                style={[
+                  styles.seePassword,
+                  styles.borderInput,
+                  styles.lastInputPassWord,
+                  styles.align,
+                  styles.input,
+                ]}
+              >
+                <Text style={[styles.colorText, styles.inputPicture]}>
+                  Picture account
+                </Text>
+                <TouchableOpacity>
+                  <MaterialIcons name="add-a-photo" size={34} color="red" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <MaterialIcons
+                    name="add-photo-alternate"
+                    size={34}
+                    color="red"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -192,7 +251,7 @@ function SingUp({ navigation }) {
                 style={[styles.buttonRegister]}
                 onPress={() => navigation.navigate("Login")}
               >
-                <Text style={[styles.textButtonRegister]}>
+                <Text style={[styles.colorText]}>
                   Already have an account ? Sign in
                 </Text>
               </TouchableOpacity>
