@@ -81,11 +81,11 @@ function Login({ setAuthToken }) {
                 style={styles.Logo}
                 source={require("../assets/images/LOGO.jpg")}
               />
-              <Text style={[styles.text]}>Sign in</Text>
+              <Text style={[styles.text, styles.colorText]}>Sign in</Text>
             </View>
             <View>
               <TextInput
-                style={[styles.input, styles.borderInput]}
+                style={[styles.input, styles.borderInput, styles.colorText]}
                 placeholder="Email"
                 name="email"
                 onChangeText={(text) =>
@@ -95,9 +95,11 @@ function Login({ setAuthToken }) {
                 require
               />
 
-              <View style={[styles.seePassword, styles.borderInput]}>
+              <View
+                style={[styles.align, styles.seePassword, styles.borderInput]}
+              >
                 <TextInput
-                  style={[styles.input, styles.inputPassword]}
+                  style={[styles.input, styles.inputPassword, styles.colorText]}
                   placeholder="Password"
                   secureTextEntry={seePassword}
                   name="password"
@@ -131,13 +133,15 @@ function Login({ setAuthToken }) {
                 style={[styles.buttonSignin]}
                 onPress={handleSubmit}
               >
-                <Text style={[styles.textButtonSignin]}>Sign in</Text>
+                <Text style={[styles.textButtonSignin, styles.colorText]}>
+                  Sign in
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.buttonRegister]}
                 onPress={() => navigation.navigate("SingUp")}
               >
-                <Text style={[styles.textButtonRegister]}>
+                <Text style={[styles.textButtonRegister, styles.colorText]}>
                   No account ? Register
                 </Text>
               </TouchableOpacity>
