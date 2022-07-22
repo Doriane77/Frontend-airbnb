@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import handleChange from "../Function/handleChange";
 
-function Login({ navigation, authToken, setAuthToken, setToken }) {
+function Login({ navigation, setAuthToken }) {
   // const navigation = useNavigation();
 
   const [formValue, setFormValue] = useState({
