@@ -6,31 +6,65 @@ import Toast from "react-native-toast-message";
 
 import Login from "./Contents/Login";
 import SingUp from "./Contents/Signup";
+import Home from "./Contents/Home";
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
-  // useEffect(() => {
-  const storeData = async (authToken) => {
+  console.log("authtoken :", authToken);
+
+  const setToken = async (token) => {
     try {
-      await AsyncStorage.setItem("authToken", authToken);
+      if (token) {
+        console.log("token :", token);
+        await AsyncStorage.setItem("authToken", token);
+      } else {
+        AsyncStorage.removeItem("authToken");
+      }
+      console.log("token :", token);
+      setAuthToken(token);
     } catch (error) {
       console.log(error);
-      AsyncStorage.removeItem("authToken");
     }
   };
-  // }, [authToken]);
-
+  if (authToken) {
+    setToken(authToken);
+  }
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      const authToken = await AsyncStorage.getItem("authToken");
+      setAuthToken(authToken);
+      setIsLoading(false);
+    };
+    bootstrapAsync();
+  }, []);
+  if (isLoading === true) {
+    return null;
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name="Login" component={Login} /> */}
-        <Stack.Screen name="Login">
-          {() => <Login setAuthToken={setAuthToken} authToken={authToken} />}
-        </Stack.Screen>
+        {authToken ? (
+          <Stack.Screen name="Home" component={Home} />
+        ) : (
+          <>
+            {/* <Stack.Screen name="Login" component={Login} /> */}
+            <Stack.Screen name="Login">
+              {(props) => (
+                <Login
+                  {...props}
+                  setAuthToken={setAuthToken}
+                  authToken={authToken}
+                  setToken={setToken}
+                />
+              )}
+            </Stack.Screen>
 
-        <Stack.Screen name="SingUp" component={SingUp} />
+            <Stack.Screen name="SingUp" component={SingUp} />
+          </>
+        )}
       </Stack.Navigator>
       <Toast />
     </NavigationContainer>
