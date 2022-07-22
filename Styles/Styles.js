@@ -74,7 +74,11 @@ const styles = StyleSheet.create({
   lastInputPassWord: {
     marginBottom: 0,
   },
-  inputPicture: { flex: 1, fontSize: 18, color: "gray" },
+  inputPicture: {
+    flex: 1,
+    fontSize: 18,
+    color: "gray",
+  },
 
   none: {
     display: "none",
