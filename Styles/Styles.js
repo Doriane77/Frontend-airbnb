@@ -2,9 +2,13 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  header: {
+    color: "tomato",
+  },
   body: {
     backgroundColor: "white",
   },
+
   container: {
     flex: 1,
     alignItems: "center",
