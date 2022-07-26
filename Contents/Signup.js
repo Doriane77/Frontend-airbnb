@@ -5,6 +5,8 @@ const axios = require("axios");
 import StatusLoading from "../Components/StatusLoading";
 
 import styles from "../Styles/Styles";
+import darktheme from "../Styles/darkTheme";
+
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -22,7 +24,7 @@ import { URL_APP_API } from "@env";
 import handleChange from "../Function/handleChange";
 import * as ImagePicker from "expo-image-picker";
 
-function SingUp({ navigation }) {
+function SingUp({ navigation, theme }) {
   const [formValue, setFormValue] = useState({
     email: "",
     username: "",
@@ -116,19 +118,34 @@ function SingUp({ navigation }) {
       {isLoading ? (
         <StatusLoading />
       ) : (
-        <ScrollView style={[{ flex: 1 }, styles.body]} scrollEnabled={true}>
+        <ScrollView
+          style={[
+            { flex: 1 },
+            styles.body,
+            theme === true ? darktheme.body : "",
+          ]}
+          scrollEnabled={true}
+        >
           <View style={[styles.container]}>
             <View style={[styles.seePassword, styles.box]}>
               <Image
                 style={styles.Logo}
-                source={require("../assets/images/LOGO.jpg")}
+                source={require("../assets/images/LOGO.png")}
               />
-              <Text style={[styles.text, styles.colorText]}>Sign up</Text>
+              <Text
+                style={[
+                  styles.text,
+                  theme === true ? darktheme.color : styles.colorText,
+                ]}
+              >
+                Sign up
+              </Text>
             </View>
             <View>
               <TextInput
                 style={[styles.input, styles.borderInput]}
                 placeholder="Email"
+                placeholderTextColor={theme === true ? "white" : "gray"}
                 value={email}
                 onChangeText={(text) => {
                   handleChange("email", text, formValue, setFormValue);
@@ -138,6 +155,7 @@ function SingUp({ navigation }) {
               <TextInput
                 style={[styles.input, styles.borderInput]}
                 placeholder="Username"
+                placeholderTextColor={theme === true ? "white" : "gray"}
                 value={username}
                 onChangeText={(text) => {
                   handleChange("username", text, formValue, setFormValue);
@@ -147,6 +165,7 @@ function SingUp({ navigation }) {
               <TextInput
                 style={[styles.input, styles.inputDescription]}
                 placeholder="Describe yourself in a few words..."
+                placeholderTextColor={theme === true ? "white" : "gray"}
                 multiline={true}
                 value={description}
                 onChangeText={(text) => {
@@ -160,6 +179,7 @@ function SingUp({ navigation }) {
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
                   placeholder="Password"
+                  placeholderTextColor={theme === true ? "white" : "gray"}
                   secureTextEntry={seePassword}
                   value={password}
                   onChangeText={(text) => {
@@ -170,11 +190,19 @@ function SingUp({ navigation }) {
                 <View>
                   {seePassword === true ? (
                     <TouchableOpacity onPress={OnOffSeePassword}>
-                      <Feather name="eye" size={25} color="gray" />
+                      <Feather
+                        name="eye"
+                        size={25}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity onPress={OnOffSeePassword}>
-                      <Feather name="eye-off" size={20} color="gray" />
+                      <Feather
+                        name="eye-off"
+                        size={20}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   )}
                 </View>
@@ -185,6 +213,7 @@ function SingUp({ navigation }) {
                 <TextInput
                   style={[styles.input, styles.inputPassword]}
                   placeholder="Confirm password"
+                  placeholderTextColor={theme === true ? "white" : "gray"}
                   secureTextEntry={seeConfirmPassword}
                   value={confirmPassword}
                   onChangeText={(text) => {
@@ -200,11 +229,19 @@ function SingUp({ navigation }) {
                 <View>
                   {seeConfirmPassword === true ? (
                     <TouchableOpacity onPress={OnOffSeeConfirmPassword}>
-                      <Feather name="eye" size={25} color="gray" />
+                      <Feather
+                        name="eye"
+                        size={25}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity onPress={OnOffSeeConfirmPassword}>
-                      <Feather name="eye-off" size={20} color="gray" />
+                      <Feather
+                        name="eye-off"
+                        size={20}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   )}
                 </View>
@@ -218,17 +255,26 @@ function SingUp({ navigation }) {
                   styles.input,
                 ]}
               >
-                <Text style={[styles.colorText, styles.inputPicture]}>
+                <Text
+                  style={[
+                    styles.inputPicture,
+                    theme === true ? darktheme.color : { color: "gray" },
+                  ]}
+                >
                   Picture account
                 </Text>
                 <TouchableOpacity>
-                  <MaterialIcons name="add-a-photo" size={34} color="red" />
+                  <MaterialIcons
+                    name="add-a-photo"
+                    size={34}
+                    color={theme === true ? "white" : "tomato"}
+                  />
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <MaterialIcons
                     name="add-photo-alternate"
                     size={34}
-                    color="red"
+                    color={theme === true ? "white" : "tomato"}
                   />
                 </TouchableOpacity>
               </View>
@@ -245,13 +291,22 @@ function SingUp({ navigation }) {
                 style={[styles.buttonSignin]}
                 onPress={handleSubmit}
               >
-                <Text style={[styles.textButtonSignin]}>Sign up</Text>
+                <Text
+                  style={[
+                    styles.textButtonSignin,
+                    theme === true ? darktheme.color : styles.colorText,
+                  ]}
+                >
+                  Sign up
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.buttonRegister]}
                 onPress={() => navigation.navigate("Login")}
               >
-                <Text style={[styles.colorText]}>
+                <Text
+                  style={[theme === true ? darktheme.color : styles.colorText]}
+                >
                   Already have an account ? Sign in
                 </Text>
               </TouchableOpacity>
