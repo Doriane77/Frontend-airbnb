@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
+
+const color = "black";
 
 const styles = StyleSheet.create({
   header: {
@@ -7,6 +9,9 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "white",
+  },
+  colorText: {
+    color: color,
   },
 
   container: {
@@ -22,13 +27,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     // backgroundColor: "red",
   },
-  colorText: {
-    color: "black",
-  },
+
   Logo: {
     width: 120,
-    height: 120,
-    backgroundColor: "white",
+    height: 170,
+    // backgroundColor: "white",
   },
   text: {
     marginTop: 25,
@@ -38,11 +41,11 @@ const styles = StyleSheet.create({
   },
 
   borderInput: {
+    // backgroundColor: "white",
     borderBottomWidth: 1,
     borderColor: "#EB5A62",
   },
   input: {
-    // backgroundColor: "purple",
     marginLeft: 3,
     width: 280,
     paddingLeft: 5,
