@@ -4,6 +4,7 @@ import Toast from "react-native-toast-message";
 const axios = require("axios");
 
 import styles from "../Styles/Styles";
+import darktheme from "../Styles/darkTheme";
 
 import StatusLoading from "../Components/StatusLoading";
 
@@ -16,9 +17,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import handleChange from "../Function/handleChange";
 
-function Login({ navigation, setAuthToken }) {
+function Login({ navigation, setAuthToken, theme }) {
   // const navigation = useNavigation();
-
+  console.log("Darktheme :", theme);
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -71,22 +72,41 @@ function Login({ navigation, setAuthToken }) {
         <StatusLoading />
       ) : (
         <KeyboardAwareScrollView
-          style={styles.body}
+          style={[styles.body, theme === true ? darktheme.body : ""]}
           keyboardVerticalOffset={100}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={[styles.container]}>
+          {/* <View style={[styles.container]}> */}
+          <View
+            style={[styles.container, theme === true ? darktheme.body : ""]}
+          >
             <View style={[styles.box]}>
               <Image
-                style={styles.Logo}
-                source={require("../assets/images/LOGO.jpg")}
+                style={[
+                  styles.Logo,
+                  theme === true ? darktheme.body : styles.body,
+                ]}
+                source={require("../assets/images/LOGO.png")}
               />
-              <Text style={[styles.text, styles.colorText]}>Sign in</Text>
+              <Text
+                style={[
+                  styles.text,
+                  theme === true ? darktheme.color : styles.colorText,
+                ]}
+              >
+                Sign in
+              </Text>
             </View>
             <View>
               <TextInput
-                style={[styles.input, styles.borderInput, styles.colorText]}
+                inputType="email"
+                style={[
+                  styles.input,
+                  styles.borderInput,
+                  theme === true ? darktheme.color : styles.colorText,
+                ]}
                 placeholder="Email"
+                placeholderTextColor={theme === true ? "white" : "gray"}
                 name="email"
                 onChangeText={(text) =>
                   handleChange("email", text, formValue, setFormValue)
@@ -99,8 +119,13 @@ function Login({ navigation, setAuthToken }) {
                 style={[styles.align, styles.seePassword, styles.borderInput]}
               >
                 <TextInput
-                  style={[styles.input, styles.inputPassword, styles.colorText]}
+                  style={[
+                    styles.input,
+                    styles.inputPassword,
+                    theme === true ? darktheme.color : styles.colorText,
+                  ]}
                   placeholder="Password"
+                  placeholderTextColor={theme === true ? "white" : "gray"}
                   secureTextEntry={seePassword}
                   name="password"
                   onChangeText={(text) =>
@@ -112,11 +137,19 @@ function Login({ navigation, setAuthToken }) {
                 <View>
                   {seePassword === true ? (
                     <TouchableOpacity onPress={OnOffSeePassword}>
-                      <Feather name="eye" size={25} color="gray" />
+                      <Feather
+                        name="eye"
+                        size={25}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity onPress={OnOffSeePassword}>
-                      <Feather name="eye-off" size={20} color="gray" />
+                      <Feather
+                        name="eye-off"
+                        size={20}
+                        color={theme === true ? "white" : "gray"}
+                      />
                     </TouchableOpacity>
                   )}
                 </View>
@@ -133,7 +166,12 @@ function Login({ navigation, setAuthToken }) {
                 style={[styles.buttonSignin]}
                 onPress={handleSubmit}
               >
-                <Text style={[styles.textButtonSignin, styles.colorText]}>
+                <Text
+                  style={[
+                    styles.textButtonSignin,
+                    theme === true ? darktheme.color : styles.colorText,
+                  ]}
+                >
                   Sign in
                 </Text>
               </TouchableOpacity>
@@ -141,7 +179,12 @@ function Login({ navigation, setAuthToken }) {
                 style={[styles.buttonRegister]}
                 onPress={() => navigation.navigate("SingUp")}
               >
-                <Text style={[styles.textButtonRegister, styles.colorText]}>
+                <Text
+                  style={[
+                    styles.textButtonRegister,
+                    theme === true ? darktheme.color : styles.colorText,
+                  ]}
+                >
                   No account ? Register
                 </Text>
               </TouchableOpacity>
