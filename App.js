@@ -14,7 +14,9 @@ import SingUp from "./Contents/Signup";
 import HomeScreen from "./Contents/HomeScreen";
 import ProfileScreen from "./Contents/ProfileScreen";
 import AroundMeScreen from "./Contents/AroundMeScreen";
+
 import styles from "./Styles/Styles";
+import darkTheme from "./Styles/darkTheme";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,6 +24,9 @@ const Stack = createNativeStackNavigator();
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
+
+  const [theme, setTheme] = useState(true);
+  // const [theme, setTheme] = useState(false);
 
   const setToken = async (token) => {
     try {
@@ -51,15 +56,30 @@ function App() {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: theme === true ? "#EB5A62" : "white",
+          },
+          headerTintColor: theme === true ? "white" : "",
+        }}
+      >
         {authToken ? (
-          <Stack.Screen name="Tab" options={{ headerShown: false }}>
+          <Stack.Screen
+            name="Tab"
+            options={{
+              headerShown: false,
+            }}
+          >
             {() => (
               <Tab.Navigator
                 screenOptions={{
                   headerShown: false,
-                  tabBarActiveTintColor: "tomato",
-                  tabBarInactiveTintColor: "gray",
+                  animationEnabled: false,
+                  tabBarActiveTintColor: "#EB5A62",
+                  tabBarInactiveTintColor: theme ? "white" : "gray",
+                  tabBarActiveBackgroundColor: theme ? "#222629" : "white",
+                  tabBarInactiveBackgroundColor: theme ? "#222629" : "white",
                 }}
               >
                 <Tab.Screen
@@ -77,12 +97,17 @@ function App() {
                         name="Home"
                         options={{
                           title: "Airbnb",
-                          // headerStyle: { backgroundColor: "red" },
+                          headerStyle: {
+                            backgroundColor:
+                              theme === true ? "#EB5A62" : "white",
+                          },
                           headerTitleAlign: "center",
-                          headerTitleStyle: styles.header,
+                          headerTitleStyle: {
+                            color: theme === true ? "white" : "red",
+                          },
                         }}
                       >
-                        {() => <HomeScreen />}
+                        {() => <HomeScreen theme={theme} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -108,8 +133,14 @@ function App() {
                         name="Around me"
                         options={{
                           title: "Around me",
+                          headerStyle: {
+                            backgroundColor:
+                              theme === true ? "#EB5A62" : "white",
+                          },
                           headerTitleAlign: "center",
-                          headerTitleStyle: styles.header,
+                          headerTitleStyle: {
+                            color: theme === true ? "white" : "red",
+                          },
                         }}
                       >
                         {() => <AroundMeScreen />}
@@ -133,9 +164,50 @@ function App() {
                         name="Profile"
                         options={{
                           title: "User Profile",
+                          headerStyle: {
+                            backgroundColor:
+                              theme === true ? "#EB5A62" : "white",
+                          },
                           // headerStyle: { backgroundColor: "red" },
                           headerTitleAlign: "center",
-                          headerTitleStyle: styles.header,
+                          headerTitleStyle: {
+                            color: theme === true ? "white" : "red",
+                          },
+                        }}
+                      >
+                        {() => <ProfileScreen />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen
+                  name="tabSettings"
+                  options={{
+                    tabBarLabel: "Settings",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"ios-options"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Settings"
+                        options={{
+                          title: "Settings",
+                          headerStyle: {
+                            backgroundColor:
+                              theme === true ? "#EB5A62" : "white",
+                          },
+                          // headerStyle: { backgroundColor: "red" },
+                          headerTitleAlign: "center",
+                          headerTitleStyle: {
+                            color: theme === true ? "white" : "red",
+                          },
                         }}
                       >
                         {() => <ProfileScreen />}
@@ -156,11 +228,22 @@ function App() {
                   setAuthToken={setAuthToken}
                   authToken={authToken}
                   setToken={setToken}
+                  theme={theme}
                 />
               )}
             </Stack.Screen>
 
-            <Stack.Screen name="SingUp" component={SingUp} />
+            <Stack.Screen name="SingUp">
+              {(props) => (
+                <SingUp
+                  {...props}
+                  setAuthToken={setAuthToken}
+                  authToken={authToken}
+                  setToken={setToken}
+                  theme={theme}
+                />
+              )}
+            </Stack.Screen>
           </>
         )}
       </Stack.Navigator>
