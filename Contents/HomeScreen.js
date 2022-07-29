@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, TextInput } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, TextInput, ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import styles from "../Styles/Styles";
@@ -8,6 +8,9 @@ import home from "../Styles/home";
 
 import handleChange from "../Function/handleChange";
 
+import { URL_APP_API } from "@env";
+const axios = require("axios");
+
 function HomeScren({ theme }) {
   // const [search, setSearch] = useState("");
   const [formValue, setFormValue] = useState({
@@ -15,8 +18,23 @@ function HomeScren({ theme }) {
     page: 1,
     limit: 10,
   });
+  const [data, setData] = useState([]);
   const { search, page, limit } = formValue;
   console.log("search :", search, "page :", page, "limit :", limit);
+  console.log("data :", data);
+
+  async function allRooms() {
+    try {
+      const response = await axios.get(`${URL_APP_API}rooms`);
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(async () => {
+    allRooms();
+  }, []);
   return (
     <KeyboardAwareScrollView
       style={[styles.body, theme === true ? darktheme.body : ""]}
@@ -38,6 +56,17 @@ function HomeScren({ theme }) {
           value={search}
         />
       </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text>BOX DES ROOMS</Text>
+        {data.map((room, index) => {
+          console.log(room);
+          return (
+            <View>
+              <Text>{room.title}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </KeyboardAwareScrollView>
   );
 }
