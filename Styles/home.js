@@ -10,6 +10,8 @@ const home = StyleSheet.create({
     margin: 3,
     width: 200,
     borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 export default home;
