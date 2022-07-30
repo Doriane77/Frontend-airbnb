@@ -13,5 +13,21 @@ const home = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  box: {
+    // backgroundColor: "gray",
+    margin: 10,
+  },
+  imgRoom: {
+    flex: 1,
+    width: 380,
+    height: 200,
+    borderRadius: 5,
+    // padding
+  },
+  imgUser: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
 });
 export default home;
