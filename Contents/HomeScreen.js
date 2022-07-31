@@ -48,59 +48,82 @@ function HomeScren({ theme }) {
     allRooms();
   }, []);
   return (
-    <KeyboardAwareScrollView
-      style={[styles.body, theme === true ? darktheme.body : ""]}
-      keyboardVerticalOffset={100}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <View style={[styles.container, theme === true ? darktheme.body : ""]}>
-        <TextInput
-          style={[
-            home.search,
-            theme === true ? darktheme.color : styles.colorText,
-          ]}
-          placeholder="Search"
-          name="search"
-          placeholderTextColor={theme === true ? "white" : "gray"}
-          onChangeText={(text) =>
-            handleChange("search", text, formValue, setFormValue)
-          }
-          value={search}
-        />
-      </View>
+    <>
+      <KeyboardAwareScrollView
+        style={[styles.body, theme === true ? darktheme.body : ""]}
+        keyboardVerticalOffset={100}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={[styles.container, theme === true ? darktheme.body : ""]}>
+          <TextInput
+            style={[
+              home.search,
+              theme === true ? darktheme.color : styles.colorText,
+            ]}
+            placeholder="Search"
+            name="search"
+            placeholderTextColor={theme === true ? "white" : "gray"}
+            onChangeText={(text) =>
+              handleChange("search", text, formValue, setFormValue)
+            }
+            value={search}
+          />
+        </View>
+      </KeyboardAwareScrollView>
       {isLoading ? (
         <StatusLoading />
       ) : (
         <FlatList
+          style={[styles.body, theme === true ? darktheme.body : ""]}
           data={data}
           renderItem={({ item }) => {
             return (
-              <View style={home.box}>
+              <View style={[styles.container, home.box]}>
                 <Image
                   style={[home.imgRoom]}
                   source={{ uri: item.photo.url }}
                 />
-                <Text>{item.title}</Text>
-                {users.map((elem, index) => {
-                  console.log(item.user == elem.id);
-                  return (
-                    <View key={elem.id}>
-                      {item.user == elem.id ? (
-                        <Image
-                          style={[home.imgUser]}
-                          source={{ uri: elem.photo.url }}
-                        />
-                      ) : null}
-                    </View>
-                  );
-                })}
+                <View>
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      home.text,
+                      theme ? darktheme.textThemeB : darktheme.textThemeW,
+                    ]}
+                  >
+                    {item.title}
+                  </Text>
+                  {users.map((elem, index) => {
+                    console.log(item.user == elem.id);
+                    return (
+                      <View key={elem.id}>
+                        {item.user == elem.id ? (
+                          <View
+                            style={[
+                              home.boxImgUser,
+                              styles.container,
+                              theme
+                                ? darktheme.textThemeB
+                                : darktheme.textThemeW,
+                            ]}
+                          >
+                            <Image
+                              style={[home.imgUser]}
+                              source={{ uri: elem.photo.url }}
+                            />
+                          </View>
+                        ) : null}
+                      </View>
+                    );
+                  })}
+                </View>
               </View>
             );
           }}
           keyExtractor={(item) => String(item.id)}
         />
       )}
-    </KeyboardAwareScrollView>
+    </>
   );
 }
 
