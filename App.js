@@ -27,8 +27,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
 
-  // const [theme, setTheme] = useState(true);
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState(true);
+  // const [theme, setTheme] = useState(false);
 
   const setToken = async (token) => {
     try {
