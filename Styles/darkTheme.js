@@ -8,5 +8,18 @@ const darkTheme = StyleSheet.create({
     // backgroundColor: "white",
     color: "white",
   },
+  text: {
+    borderBottomColor: "white",
+  },
+  textThemeW: {
+    color: "black",
+    backgroundColor: "white",
+    borderBottomColor: "gray",
+  },
+  textThemeB: {
+    color: "white",
+    backgroundColor: "#222629",
+    borderBottomColor: "red",
+  },
 });
 export default darkTheme;
