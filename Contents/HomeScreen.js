@@ -83,7 +83,9 @@ function HomeScren({ theme }) {
                   style={[home.imgRoom]}
                   source={{ uri: item.photo.url }}
                 />
-                <Text style={[home.price]}>{item.price} €</Text>
+                <View style={[home.boxPrice]}>
+                  <Text style={[home.price]}>{item.price} €</Text>
+                </View>
                 <View>
                   <Text
                     numberOfLines={1}
