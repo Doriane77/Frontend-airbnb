@@ -11,7 +11,13 @@ function ProfileScreen({ theme }) {
   });
   const { email } = formValue;
   return (
-    <View style={[styles.body, theme === true ? darktheme.body : ""]}>
+    <View
+      style={[
+        styles.container,
+        styles.body,
+        theme === true ? darktheme.body : "",
+      ]}
+    >
       {/* <Image source={}/> */}
       <TextInput
         inputType="email"
