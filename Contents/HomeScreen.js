@@ -97,11 +97,6 @@ function HomeScren({ theme }) {
                     {item.title}
                   </Text>
                   {users.map((elem, index) => {
-                    console.log(
-                      item.user,
-                      elem.id,
-                      String(item.user) === String(elem.id)
-                    );
                     return (
                       <View key={elem.id}>
                         {String(item.user) === String(elem.id) ? (
