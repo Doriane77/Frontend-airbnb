@@ -20,6 +20,7 @@ const darkTheme = StyleSheet.create({
     color: "white",
     backgroundColor: "#222629",
     borderBottomColor: "red",
+    borderColor: "red",
   },
 });
 export default darkTheme;
