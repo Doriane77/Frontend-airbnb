@@ -3,9 +3,12 @@ import {
   Text,
   View,
   TextInput,
-  ScrollView,
   FlatList,
   Image,
+  Linking,
+  TouchableHighlight,
+  Button,
+  TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -19,7 +22,7 @@ import { URL_APP_API } from "@env";
 import StatusLoading from "../Components/StatusLoading";
 const axios = require("axios");
 
-function HomeScren({ theme }) {
+function HomeScren({ navigation, theme }) {
   // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [formValue, setFormValue] = useState({
@@ -27,18 +30,18 @@ function HomeScren({ theme }) {
     page: 1,
     limit: 10,
   });
-  const [data, setData] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [users, setUsers] = useState([]);
+
   const { search, page, limit } = formValue;
   console.log("search :", search, "page :", page, "limit :", limit);
-  // console.log("rooms :", data);
 
   async function allRooms() {
     try {
       const response = await axios.get(`${URL_APP_API}rooms`);
       const resUsers = await axios.get(`${URL_APP_API}users`);
+      setRooms(response.data);
       setUsers(resUsers.data);
-      setData(response.data);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -75,10 +78,14 @@ function HomeScren({ theme }) {
       ) : (
         <FlatList
           style={[styles.body, theme === true ? darktheme.body : ""]}
-          data={data}
+          data={rooms}
           renderItem={({ item }) => {
             return (
-              <View style={[styles.container, home.box]}>
+              <TouchableOpacity
+                // onPress={() => navigation.navigate("SingUp")}
+                onPress={() => navigation.navigate("Room", { id: item.id })}
+                style={[styles.container, home.box]}
+              >
                 <Image
                   style={[home.imgRoom]}
                   source={{ uri: item.photo.url }}
@@ -96,6 +103,7 @@ function HomeScren({ theme }) {
                   >
                     {item.title}
                   </Text>
+
                   {users.map((elem, index) => {
                     return (
                       <View key={elem.id}>
@@ -119,7 +127,7 @@ function HomeScren({ theme }) {
                     );
                   })}
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={(item) => String(item.id)}

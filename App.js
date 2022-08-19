@@ -14,6 +14,7 @@ import SingUp from "./Contents/Signup";
 import HomeScreen from "./Contents/HomeScreen";
 import ProfileScreen from "./Contents/ProfileScreen";
 import AroundMeScreen from "./Contents/AroundMeScreen";
+import RoomScreen from "./Contents/RoomScreen";
 
 import styles from "./Styles/Styles";
 import darkTheme from "./Styles/darkTheme";
@@ -67,159 +68,172 @@ function App() {
         }}
       >
         {authToken ? (
-          <Stack.Screen
-            name="Tab"
-            options={{
-              headerShown: false,
-            }}
-          >
-            {() => (
-              <Tab.Navigator
-                screenOptions={{
-                  headerShown: false,
-                  animationEnabled: false,
-                  tabBarActiveTintColor: "#EB5A62",
-                  tabBarInactiveTintColor: theme ? "white" : "gray",
-                  tabBarActiveBackgroundColor: theme ? "#222629" : "white",
-                  tabBarInactiveBackgroundColor: theme ? "#222629" : "white",
-                }}
-              >
-                <Tab.Screen
-                  name="TabHome"
-                  options={{
-                    tabBarLabel: "Home",
-                    tabBarIcon: ({ color, size }) => (
-                      <Ionicons name={"ios-home"} size={size} color={color} />
-                    ),
+          <>
+            <Stack.Screen
+              name="Tab"
+              options={{
+                headerShown: false,
+              }}
+            >
+              {() => (
+                <Tab.Navigator
+                  screenOptions={{
+                    headerShown: false,
+                    animationEnabled: false,
+                    tabBarActiveTintColor: "#EB5A62",
+                    tabBarInactiveTintColor: theme ? "white" : "gray",
+                    tabBarActiveBackgroundColor: theme ? "#222629" : "white",
+                    tabBarInactiveBackgroundColor: theme ? "#222629" : "white",
                   }}
                 >
-                  {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="Home"
-                        options={{
-                          title: "Airbnb",
-                          headerStyle: {
-                            backgroundColor:
-                              theme === true ? "#EB5A62" : "white",
-                          },
-                          headerTitleAlign: "center",
-                          headerTitleStyle: {
-                            color: theme === true ? "white" : "red",
-                          },
-                        }}
-                      >
-                        {() => <HomeScreen theme={theme} />}
-                      </Stack.Screen>
-                    </Stack.Navigator>
-                  )}
-                </Tab.Screen>
+                  <Tab.Screen
+                    name="TabHome"
+                    options={{
+                      tabBarLabel: "Home",
+                      tabBarIcon: ({ color, size }) => (
+                        <Ionicons name={"ios-home"} size={size} color={color} />
+                      ),
+                    }}
+                  >
+                    {() => (
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="Home"
+                          options={{
+                            title: "Airbnb",
+                            headerStyle: {
+                              backgroundColor:
+                                theme === true ? "#EB5A62" : "white",
+                            },
+                            headerTitleAlign: "center",
+                            headerTitleStyle: {
+                              color: theme === true ? "white" : "red",
+                            },
+                          }}
+                        >
+                          {(props) => <HomeScreen {...props} theme={theme} />}
+                        </Stack.Screen>
+                      </Stack.Navigator>
+                    )}
+                  </Tab.Screen>
 
-                <Tab.Screen
-                  name="TabAroundMe"
-                  options={{
-                    tabBarLabel: "Around me",
+                  <Tab.Screen
+                    name="TabAroundMe"
+                    options={{
+                      tabBarLabel: "Around me",
 
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons
-                        name="map-marker-outline"
-                        size={size}
-                        color={color}
-                      />
-                    ),
-                  }}
-                >
-                  {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="Around me"
-                        options={{
-                          title: "Around me",
-                          headerStyle: {
-                            backgroundColor:
-                              theme === true ? "#EB5A62" : "white",
-                          },
-                          headerTitleAlign: "center",
-                          headerTitleStyle: {
-                            color: theme === true ? "white" : "red",
-                          },
-                        }}
-                      >
-                        {() => <AroundMeScreen />}
-                      </Stack.Screen>
-                    </Stack.Navigator>
-                  )}
-                </Tab.Screen>
+                      tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons
+                          name="map-marker-outline"
+                          size={size}
+                          color={color}
+                        />
+                      ),
+                    }}
+                  >
+                    {() => (
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="Around me"
+                          options={{
+                            title: "Around me",
+                            headerStyle: {
+                              backgroundColor:
+                                theme === true ? "#EB5A62" : "white",
+                            },
+                            headerTitleAlign: "center",
+                            headerTitleStyle: {
+                              color: theme === true ? "white" : "red",
+                            },
+                          }}
+                        >
+                          {() => <AroundMeScreen />}
+                        </Stack.Screen>
+                      </Stack.Navigator>
+                    )}
+                  </Tab.Screen>
 
-                <Tab.Screen
-                  name="TabProfile"
-                  options={{
-                    tabBarLabel: "My profile",
-                    tabBarIcon: ({ color, size }) => (
-                      <AntDesign name="user" size={size} color={color} />
-                    ),
-                  }}
-                >
-                  {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="Profile"
-                        options={{
-                          title: "User Profile",
-                          headerStyle: {
-                            backgroundColor:
-                              theme === true ? "#EB5A62" : "white",
-                          },
-                          // headerStyle: { backgroundColor: "red" },
-                          headerTitleAlign: "center",
-                          headerTitleStyle: {
-                            color: theme === true ? "white" : "red",
-                          },
-                        }}
-                      >
-                        {() => <ProfileScreen theme={theme} />}
-                      </Stack.Screen>
-                    </Stack.Navigator>
-                  )}
-                </Tab.Screen>
-                <Tab.Screen
-                  name="tabSettings"
-                  options={{
-                    tabBarLabel: "Settings",
-                    tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
-                        size={size}
-                        color={color}
-                      />
-                    ),
-                  }}
-                >
-                  {() => (
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="Settings"
-                        options={{
-                          title: "Settings",
-                          headerStyle: {
-                            backgroundColor:
-                              theme === true ? "#EB5A62" : "white",
-                          },
-                          // headerStyle: { backgroundColor: "red" },
-                          headerTitleAlign: "center",
-                          headerTitleStyle: {
-                            color: theme === true ? "white" : "red",
-                          },
-                        }}
-                      >
-                        {() => <ProfileScreen />}
-                      </Stack.Screen>
-                    </Stack.Navigator>
-                  )}
-                </Tab.Screen>
-              </Tab.Navigator>
-            )}
-          </Stack.Screen>
+                  <Tab.Screen
+                    name="TabProfile"
+                    options={{
+                      tabBarLabel: "My profile",
+                      tabBarIcon: ({ color, size }) => (
+                        <AntDesign name="user" size={size} color={color} />
+                      ),
+                    }}
+                  >
+                    {() => (
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="Profile"
+                          options={{
+                            title: "User Profile",
+                            headerStyle: {
+                              backgroundColor:
+                                theme === true ? "#EB5A62" : "white",
+                            },
+                            // headerStyle: { backgroundColor: "red" },
+                            headerTitleAlign: "center",
+                            headerTitleStyle: {
+                              color: theme === true ? "white" : "red",
+                            },
+                          }}
+                        >
+                          {() => <ProfileScreen theme={theme} />}
+                        </Stack.Screen>
+                      </Stack.Navigator>
+                    )}
+                  </Tab.Screen>
+                  <Tab.Screen
+                    name="tabSettings"
+                    options={{
+                      tabBarLabel: "Settings",
+                      tabBarIcon: ({ color, size }) => (
+                        <Ionicons
+                          name={"ios-options"}
+                          size={size}
+                          color={color}
+                        />
+                      ),
+                    }}
+                  >
+                    {() => (
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="Settings"
+                          options={{
+                            title: "Settings",
+                            headerStyle: {
+                              backgroundColor:
+                                theme === true ? "#EB5A62" : "white",
+                            },
+                            // headerStyle: { backgroundColor: "red" },
+                            headerTitleAlign: "center",
+                            headerTitleStyle: {
+                              color: theme === true ? "white" : "red",
+                            },
+                          }}
+                        >
+                          {() => <ProfileScreen />}
+                        </Stack.Screen>
+                      </Stack.Navigator>
+                    )}
+                  </Tab.Screen>
+                </Tab.Navigator>
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="Room">
+              {(props) => (
+                <RoomScreen
+                  {...props}
+                  setAuthToken={setAuthToken}
+                  authToken={authToken}
+                  setToken={setToken}
+                  theme={theme}
+                />
+              )}
+            </Stack.Screen>
+          </>
         ) : (
           <>
             {/* <Stack.Screen name="Login" component={Login} /> */}
