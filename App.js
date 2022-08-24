@@ -214,7 +214,7 @@ function App() {
                             },
                           }}
                         >
-                          {() => <ProfileScreen />}
+                          {() => <SettingScreen theme={theme} />}
                         </Stack.Screen>
                       </Stack.Navigator>
                     )}
