@@ -82,7 +82,6 @@ function HomeScren({ navigation, theme }) {
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                // onPress={() => navigation.navigate("SingUp")}
                 onPress={() => navigation.navigate("Room", { id: item.id })}
                 style={[styles.container, home.box]}
               >
