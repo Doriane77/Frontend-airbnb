@@ -46,15 +46,6 @@ function HomeScreen({ route, theme }) {
       ) : (
         <ScrollView style={[styles.body, theme === true ? darktheme.body : ""]}>
           <View style={[styles.container]}>
-            <Text
-              numberOfLines={1}
-              style={[
-                roomCSS.title,
-                theme ? darktheme.textThemeB : darktheme.textThemeW,
-              ]}
-            >
-              {room[0].title}
-            </Text>
             <View>
               <Image
                 style={[roomCSS.imgRoom]}
@@ -64,6 +55,7 @@ function HomeScreen({ route, theme }) {
                 <Text style={[roomCSS.price]}>{room[0].price} €</Text>
               </View>
             </View>
+
             <View style={[roomCSS.boxImgUser]}>
               <Text
                 numberOfLines={1}
