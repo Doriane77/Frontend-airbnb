@@ -4,8 +4,7 @@ const roomCSS = StyleSheet.create({
   title: {
     height: 50,
     paddingTop: 10,
-    // width: 330,
-    // borderBottomWidth: 1,
+    width: 270,
     fontSize: 18,
   },
   boxPrice: {
@@ -22,21 +21,21 @@ const roomCSS = StyleSheet.create({
     color: "white",
   },
   imgRoom: {
-    // flex: 1,
     width: 350,
     height: 220,
     borderRadius: 5,
-    // marginBottom: 10,
+    marginTop: 15,
   },
   boxImgUser: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     width: 340,
-    // backgroundColor: "red",
-    // zIndex: 10,
   },
   imgUser: {
     position: "relative",
-    top: -30,
+    backgroundColor: "red",
+    margin: 5,
     width: 60,
     height: 60,
     borderRadius: 50,
