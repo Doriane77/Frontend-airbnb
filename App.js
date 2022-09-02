@@ -15,6 +15,7 @@ import HomeScreen from "./Contents/HomeScreen";
 import ProfileScreen from "./Contents/ProfileScreen";
 import AroundMeScreen from "./Contents/AroundMeScreen";
 import RoomScreen from "./Contents/RoomScreen";
+import SettingScreen from "./Contents/SettingScreen";
 
 import styles from "./Styles/Styles";
 import darkTheme from "./Styles/darkTheme";
@@ -27,6 +28,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const [theme, setTheme] = useState(true);
   // const [theme, setTheme] = useState(false);
@@ -214,7 +216,9 @@ function App() {
                             },
                           }}
                         >
-                          {() => <SettingScreen theme={theme} />}
+                          {() => (
+                            <SettingScreen theme={theme} setTheme={setTheme} />
+                          )}
                         </Stack.Screen>
                       </Stack.Navigator>
                     )}
