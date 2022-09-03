@@ -58,6 +58,7 @@ function App() {
   if (isLoading === true) {
     return null;
   }
+  console.log("Token", authToken);
   return (
     <NavigationContainer>
       <Stack.Navigator

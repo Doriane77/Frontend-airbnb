@@ -1,18 +1,15 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-function ActiviteButton({ active, theme }) {
-  console.log(active);
+import darktheme from "../Styles/darkTheme";
+
+function ActiviteButton({ active }) {
   return (
     <>
       {active ? (
-        <View>
-          <Text style={[]}>Desactiver</Text>
-        </View>
+        <Text style={[darktheme.textThemeB]}>Desactiver</Text>
       ) : (
-        <View>
-          <Text>Activer</Text>
-        </View>
+        <Text style={[darktheme.textThemeW]}>Activer</Text>
       )}
     </>
   );

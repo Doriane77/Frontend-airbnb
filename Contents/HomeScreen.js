@@ -34,7 +34,7 @@ function HomeScren({ navigation, theme }) {
   const [users, setUsers] = useState([]);
 
   const { search, page, limit } = formValue;
-  console.log("search :", search, "page :", page, "limit :", limit);
+  // console.log("search :", search, "page :", page, "limit :", limit);
 
   async function allRooms() {
     try {
