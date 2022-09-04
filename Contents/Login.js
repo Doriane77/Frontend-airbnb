@@ -42,7 +42,7 @@ function Login({ navigation, setAuthToken, theme, setUserId }) {
       setValid(true);
       setIsLoading(false);
       const data = response.data[0];
-
+      console.log(data);
       if (response.data.message !== undefined) {
         Toast.show({
           type: "error",
