@@ -8,7 +8,22 @@ import darktheme from "../Styles/darkTheme";
 import settings from "../Styles/setting";
 import styles from "../Styles/Styles";
 
-function SettingScreen({ navigation, theme, setTheme }) {
+function SettingScreen({ navigation, theme, setTheme, setAuthToken }) {
+  console.log("setting theme :", theme);
+
+  const storeTheme = async (dark) => {
+    try {
+      console.log("dark :", dark);
+      await AsyncStorage.setItem("theme", dark);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function changeTheme() {
+    setTheme(!theme);
+    storeTheme(String(theme));
+  }
   async function disconect() {
     try {
       console.log("Deconnection");
@@ -17,6 +32,7 @@ function SettingScreen({ navigation, theme, setTheme }) {
       //   "userId",
       // ]);
       // console.log("log deco :", deconnection);
+      setAuthToken(null);
       await AsyncStorage.clear();
       // await AsyncStorage.removeItem("authToken");
       navigation.navigate("Login");
@@ -25,7 +41,12 @@ function SettingScreen({ navigation, theme, setTheme }) {
     }
   }
   return (
-    <View style={[styles.container, theme === true ? darktheme.body : ""]}>
+    <View
+      style={[
+        styles.container,
+        theme === true ? darktheme.body : darktheme.textThemeW,
+      ]}
+    >
       <View
         style={[
           settings.boxActivite,
@@ -35,7 +56,7 @@ function SettingScreen({ navigation, theme, setTheme }) {
         <Text style={[theme ? darktheme.textThemeB : darktheme.textThemeW]}>
           Theme sombre :
         </Text>
-        <TouchableOpacity onPress={() => setTheme(!theme)}>
+        <TouchableOpacity onPress={() => changeTheme()}>
           <ActiviteButton active={theme} />
         </TouchableOpacity>
       </View>
