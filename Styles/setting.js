@@ -13,6 +13,7 @@ const settings = StyleSheet.create({
   },
   buttondisconect: {
     // backgroundColor: "pink",
+    borderColor: "red",
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",

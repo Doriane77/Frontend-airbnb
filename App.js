@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Toast from "react-native-toast-message";
+import Toast, { InfoToast } from "react-native-toast-message";
 
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -29,7 +29,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
   const [userId, setUserId] = useState(null);
-
+  console.log("userId : ", userId);
   const [theme, setTheme] = useState(false);
 
   const setToken = async (token) => {
@@ -44,9 +44,25 @@ function App() {
       console.log(error);
     }
   };
+  const storeId = async (id) => {
+    try {
+      if (id) {
+        AsyncStorage.setItem("userId", id);
+      } else {
+        AsyncStorage.removeItem("userId");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (authToken) {
     setToken(authToken);
   }
+  if (userId) {
+    storeId(userId);
+  }
+
   useEffect(() => {
     const bootstrapAsync = async () => {
       const authToken = await AsyncStorage.getItem("authToken");
@@ -55,9 +71,11 @@ function App() {
     };
     bootstrapAsync();
   }, []);
+
   if (isLoading === true) {
     return null;
   }
+
   console.log("Token", authToken);
   return (
     <NavigationContainer>
@@ -216,8 +234,12 @@ function App() {
                             },
                           }}
                         >
-                          {() => (
-                            <SettingScreen theme={theme} setTheme={setTheme} />
+                          {(props) => (
+                            <SettingScreen
+                              {...props}
+                              theme={theme}
+                              setTheme={setTheme}
+                            />
                           )}
                         </Stack.Screen>
                       </Stack.Navigator>
@@ -249,6 +271,7 @@ function App() {
                   authToken={authToken}
                   setToken={setToken}
                   theme={theme}
+                  setUserId={setUserId}
                 />
               )}
             </Stack.Screen>

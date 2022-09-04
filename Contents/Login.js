@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import handleChange from "../Function/handleChange";
 
-function Login({ navigation, setAuthToken, theme }) {
+function Login({ navigation, setAuthToken, theme, setUserId }) {
   // const navigation = useNavigation();
   console.log("Darktheme :", theme);
   const [formValue, setFormValue] = useState({
@@ -49,6 +49,7 @@ function Login({ navigation, setAuthToken, theme }) {
           text1: `${response.data.message} ! `,
         });
       } else {
+        setUserId(data.id);
         const token = data.token;
         setAuthToken(token);
         Toast.show({

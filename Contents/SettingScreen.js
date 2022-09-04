@@ -8,15 +8,18 @@ import darktheme from "../Styles/darkTheme";
 import settings from "../Styles/setting";
 import styles from "../Styles/Styles";
 
-function SettingScreen({ theme, setTheme }) {
+function SettingScreen({ navigation, theme, setTheme }) {
   async function disconect() {
     try {
       console.log("Deconnection");
-      const deconnection = await AsyncStorage.multiRemove([
-        "authToken",
-        "userId",
-      ]);
-      console.log("log deco :", deconnection);
+      // const deconnection = await AsyncStorage.multiRemove([
+      //   "authToken",
+      //   "userId",
+      // ]);
+      // console.log("log deco :", deconnection);
+      await AsyncStorage.clear();
+      // await AsyncStorage.removeItem("authToken");
+      navigation.navigate("Login");
     } catch (error) {
       console.log(error);
     }
@@ -36,12 +39,7 @@ function SettingScreen({ theme, setTheme }) {
           <ActiviteButton active={theme} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={[
-          settings.buttondisconect,
-          theme ? darktheme.textThemeB : darktheme.textThemeW,
-        ]}
-      >
+      <TouchableOpacity style={[settings.buttondisconect]}>
         <Text
           style={[theme ? darktheme.textThemeB : darktheme.textThemeW]}
           onPress={() => disconect()}
