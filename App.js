@@ -38,6 +38,7 @@ function App() {
         await AsyncStorage.setItem("authToken", token);
       } else {
         AsyncStorage.removeItem("authToken");
+        console.log("supprime authToken");
       }
       setAuthToken(token);
     } catch (error) {
@@ -50,6 +51,7 @@ function App() {
         AsyncStorage.setItem("userId", id);
       } else {
         AsyncStorage.removeItem("userId");
+        console.log("supprimer userId");
       }
     } catch (error) {
       console.log(error);
@@ -60,12 +62,21 @@ function App() {
     setToken(authToken);
   }
   if (userId) {
-    storeId(userId);
+    storeId(String(userId));
   }
 
   useEffect(() => {
     const bootstrapAsync = async () => {
       const authToken = await AsyncStorage.getItem("authToken");
+      const userId = await AsyncStorage.getItem("userId");
+      const theme = await AsyncStorage.getItem("theme");
+      console.log("storage theme :", theme);
+      if (theme === "true") {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+      setUserId(userId);
       setAuthToken(authToken);
       setIsLoading(false);
     };
@@ -239,6 +250,9 @@ function App() {
                               {...props}
                               theme={theme}
                               setTheme={setTheme}
+                              setAuthToken={setAuthToken}
+                              setToken={setToken}
+                              storeId={storeId}
                             />
                           )}
                         </Stack.Screen>
