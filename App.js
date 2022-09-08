@@ -210,7 +210,9 @@ function App() {
                             },
                           }}
                         >
-                          {() => <ProfileScreen theme={theme} />}
+                          {() => (
+                            <ProfileScreen theme={theme} userId={userId} />
+                          )}
                         </Stack.Screen>
                       </Stack.Navigator>
                     )}

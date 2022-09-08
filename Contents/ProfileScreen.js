@@ -3,6 +3,9 @@ import { Image, Text, TextInput, View, TouchableOpacity } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import { URL_APP_API } from "@env";
+import axios from "axios";
+
 import handleChange from "../Function/handleChange";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,7 +15,9 @@ import styles from "../Styles/Styles";
 import darktheme from "../Styles/darkTheme";
 import profile from "../Styles/profile";
 
-function ProfileScreen({ theme }) {
+function ProfileScreen({ theme, userId }) {
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [seePassword, setSeePassword] = useState(false);
   const [formValue, setFormValue] = useState({
     email: "",
@@ -35,9 +40,16 @@ function ProfileScreen({ theme }) {
   function OnOffSeePassword() {
     setSeePassword(!seePassword);
   }
-  function userData() {
-    console.log("UserData");
+  // console.log(user.url);
+  async function userData() {
     try {
+      console.log("user :", userId);
+
+      const UserData = await axios.get(`${URL_APP_API}user/${userId}`);
+      setUser(UserData.data);
+      console.log("USER :", user);
+      setIsLoading(false);
+      console.log("UserData :", UserData.data);
     } catch (error) {
       console.log(error);
     }
@@ -45,12 +57,28 @@ function ProfileScreen({ theme }) {
   useEffect(() => {
     userData();
   }, []);
+  console.log("isLoading :", isLoading);
   return (
     <KeyboardAwareScrollView
       style={[styles.body, theme === true ? darktheme.body : ""]}
       keyboardVerticalOffset={100}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
+      {isLoading ? (
+        <Text>Sa charge</Text>
+      ) : (
+        <View
+          style={[
+            styles.container,
+            styles.body,
+            theme === true ? darktheme.body : "",
+          ]}
+        >
+          {/* <Text>{user.photo.url}</Text> */}
+          <Image style={[profile.boxImg]} source={{ uri: user.photo.url }} />
+        </View>
+      )}
+
       <View
         style={[
           styles.container,
