@@ -17,7 +17,8 @@ function SettingScreen({
 }) {
   const storeTheme = async (dark) => {
     try {
-      await AsyncStorage.setItem("theme", dark);
+      console.log("storeTheme :", dark);
+      await AsyncStorage.setItem("theme", JSON.stringify(dark));
     } catch (error) {
       console.log(error);
     }
@@ -25,12 +26,12 @@ function SettingScreen({
 
   function changeTheme() {
     setTheme(!theme);
-    storeTheme(String(theme));
+    storeTheme(!theme);
   }
   async function disconect() {
     try {
       await AsyncStorage.multiRemove(["authToken", "userId"]);
-
+      await AsyncStorage.removeItem("theme");
       // await AsyncStorage.clear(); supprime toute les données du AsyncStorage
       // await AsyncStorage.removeItem("authToken"); sup un elem du AsyncStorage
       // await AsyncStorage.removeItem("userId");sup un elem du AsyncStorage

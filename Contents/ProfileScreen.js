@@ -44,7 +44,7 @@ function ProfileScreen({ theme, userId }) {
   async function userData() {
     try {
       console.log("user :", userId);
-
+      setIsLoading(true);
       const UserData = await axios.get(`${URL_APP_API}user/${userId}`);
       setUser(UserData.data);
       console.log("USER :", user);
@@ -75,7 +75,7 @@ function ProfileScreen({ theme, userId }) {
           ]}
         >
           {/* <Text>{user.photo.url}</Text> */}
-          <Image style={[profile.boxImg]} source={{ uri: user.photo.url }} />
+          {/* <Image style={[profile.boxImg]} source={{ uri: user.photo.url }} /> */}
         </View>
       )}
 
