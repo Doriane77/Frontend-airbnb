@@ -8,12 +8,15 @@ import darktheme from "../Styles/darkTheme";
 import settings from "../Styles/setting";
 import styles from "../Styles/Styles";
 
-function SettingScreen({ navigation, theme, setTheme, setAuthToken }) {
-  console.log("setting theme :", theme);
-
+function SettingScreen({
+  navigation,
+  theme,
+  setTheme,
+  setAuthToken,
+  setUserId,
+}) {
   const storeTheme = async (dark) => {
     try {
-      console.log("dark :", dark);
       await AsyncStorage.setItem("theme", dark);
     } catch (error) {
       console.log(error);
@@ -26,15 +29,14 @@ function SettingScreen({ navigation, theme, setTheme, setAuthToken }) {
   }
   async function disconect() {
     try {
-      console.log("Deconnection");
-      // const deconnection = await AsyncStorage.multiRemove([
-      //   "authToken",
-      //   "userId",
-      // ]);
-      // console.log("log deco :", deconnection);
+      await AsyncStorage.multiRemove(["authToken", "userId"]);
+
+      // await AsyncStorage.clear(); supprime toute les données du AsyncStorage
+      // await AsyncStorage.removeItem("authToken"); sup un elem du AsyncStorage
+      // await AsyncStorage.removeItem("userId");sup un elem du AsyncStorage
+
       setAuthToken(null);
-      await AsyncStorage.clear();
-      // await AsyncStorage.removeItem("authToken");
+      setUserId(null);
       navigation.navigate("Login");
     } catch (error) {
       console.log(error);

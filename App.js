@@ -29,7 +29,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  console.log("userId : ", userId);
   const [theme, setTheme] = useState(false);
 
   const setToken = async (token) => {
@@ -70,7 +69,6 @@ function App() {
       const authToken = await AsyncStorage.getItem("authToken");
       const userId = await AsyncStorage.getItem("userId");
       const theme = await AsyncStorage.getItem("theme");
-      console.log("storage theme :", theme);
       if (theme === "true") {
         setTheme(true);
       } else {
@@ -86,7 +84,8 @@ function App() {
   if (isLoading === true) {
     return null;
   }
-
+  console.log("darkTheme :", theme);
+  console.log("userId : ", userId);
   console.log("Token", authToken);
   return (
     <NavigationContainer>
@@ -255,6 +254,7 @@ function App() {
                               setAuthToken={setAuthToken}
                               setToken={setToken}
                               storeId={storeId}
+                              setUserId={setUserId}
                             />
                           )}
                         </Stack.Screen>
